@@ -105,7 +105,7 @@ window.addEventListener('DOMContentLoaded', event => {
         }
     });
     (function() {
-        emailjs.init("XT5ZRKvMkfyNcd9sv");  // Your public API key
+        emailjs.init("kwP6YxsTbujowmzN6");  // Your public API key
     })();
     
     document.getElementById('contactForm').addEventListener('submit', function(event) {
