@@ -104,4 +104,57 @@ window.addEventListener('DOMContentLoaded', event => {
             navbarCollapse.classList.remove('show');
         }
     });
+    (function() {
+        emailjs.init("XT5ZRKvMkfyNcd9sv");  // Your public API key
+    })();
+    
+    document.getElementById('contactForm').addEventListener('submit', function(event) {
+        event.preventDefault();  // Prevent page reload
+    
+        const name = document.getElementById('name').value.trim();
+        const phone = document.getElementById('phone').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const message = document.getElementById('message').value.trim();
+        const statusElement = document.getElementById('status');
+    
+        if (!name || !phone || !email || !message) {
+            statusElement.innerHTML = "All fields are required.";
+            return;
+        }
+    
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            statusElement.innerHTML = "Please enter a valid email address.";
+            return;
+        }
+    
+        // Send the form data to your service
+        emailjs.send("service_e2qkmkl", "template_mvwa2yg", {
+            from_name: name,
+            phone: phone,
+            email_id: email,
+            message: message,
+        })
+        .then(function(response) {
+            console.log('SUCCESS!', response.status, response.text);
+            statusElement.innerHTML = "Message sent successfully!";
+    
+            // Send acknowledgment email to the user
+            emailjs.send("service_e2qkmkl", "template_pahi0pf", {
+                to_email: email,
+                from_name: name,
+            })
+            .then(function(response) {
+                console.log('Acknowledgment email sent successfully!', response.status, response.text);
+                // Clear the form fields
+                document.getElementById('contactForm').reset();
+            }, function(error) {
+                console.log('Failed to send acknowledgment email...', error);
+                statusElement.innerHTML = "Failed to send acknowledgment email!";
+            });
+        }, function(error) {
+            console.log('FAILED...', error);
+            statusElement.innerHTML = "Failed to send message!";
+        });
+    });
 });
