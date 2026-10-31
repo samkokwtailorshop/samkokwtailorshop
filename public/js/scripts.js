@@ -129,7 +129,7 @@ window.addEventListener('DOMContentLoaded', event => {
         }
     
         // Send the form data to your service
-        emailjs.send("service_e2qkmkl", "template_mvwa2yg", {
+        emailjs.send("service_veqka1v", "template_mvwa2yg", {
             from_name: name,
             phone: phone,
             email_id: email,
@@ -140,7 +140,7 @@ window.addEventListener('DOMContentLoaded', event => {
             statusElement.innerHTML = "Message sent successfully!";
     
             // Send acknowledgment email to the user
-            emailjs.send("service_e2qkmkl", "template_pahi0pf", {
+            emailjs.send("service_veqka1v", "template_pahi0pf", {
                 to_email: email,
                 from_name: name,
             })
